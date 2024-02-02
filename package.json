@@ -6,7 +6,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "mocha --require ts-node/register --recursive tests/**/*.test.ts",
-    "test:watch": "mocha --reporter min --require ts-node/register --recursive --watch tests/**/*.test.ts"
+    "test:watch": "mocha --reporter min --require ts-node/register --recursive --watch-extensions ts --watch tests/**/*.test.ts"
   },
   "devDependencies": {
     "@types/chai": "4.1.4",
