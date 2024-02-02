@@ -20,31 +20,23 @@ export class TennisGame1 implements TennisGame {
     if (this.isTie()) return this.getTieScore();
     if (this.isWin()) return this.getWinScore();
     if (this.isAdvantage()) return this.getAdvantageScore();
+    if (!this.isTie() && !this.isWinStage()) return this.getStandardScore();
 
-    let score: string = "";
-    let tempScore: number = 0;
-    for (let i = 1; i < 3; i++) {
-      if (i === 1) tempScore = this.m_score1;
-      else {
-        score += "-";
-        tempScore = this.m_score2;
-      }
-      switch (tempScore) {
-        case 0:
-          score += "Love";
-          break;
-        case 1:
-          score += "Fifteen";
-          break;
-        case 2:
-          score += "Thirty";
-          break;
-        case 3:
-          score += "Forty";
-          break;
-      }
-    }
-    return score;
+    throw new Error("Invalid situation");
+  }
+
+  private getStandardScore() {
+    return `${this.getScoreValue(this.m_score1)}-${this.getScoreValue(
+      this.m_score2
+    )}`;
+  }
+
+  private getScoreValue(score: number) {
+    if (score === 0) return "Love";
+    if (score === 1) return "Fifteen";
+    if (score === 2) return "Thirty";
+    if (score === 3) return "Forty";
+    throw new Error(`Invalid score value: ${score}`);
   }
 
   private getWinScore(): string {
@@ -56,10 +48,8 @@ export class TennisGame1 implements TennisGame {
   }
 
   private getTieScore() {
-    if (this.m_score1 === 0) return "Love-All";
-    if (this.m_score1 === 1) return "Fifteen-All";
-    if (this.m_score1 === 2) return "Thirty-All";
-    return "Deuce";
+    if (this.m_score1 > 2) return "Deuce";
+    return `${this.getScoreValue(this.m_score1)}-All`;
   }
 
   private isTie() {
